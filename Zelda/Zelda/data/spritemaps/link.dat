@@ -1,0 +1,8 @@
+0=idle-down,0,0,15,15
+1=idle-left,16,0,31,15
+2=idle-up,32,0,47,15
+3=idle-right,48,0,63,15
+4=moving-down,0,16,15,31
+5=moving-left,16,16,31,31
+6=moving-up,32,16,47,31
+7=moving-right,48,16,63,31
