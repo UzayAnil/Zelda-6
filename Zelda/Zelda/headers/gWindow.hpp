@@ -8,7 +8,10 @@
 using sf::RenderWindow;
 using sf::View;
 using sf::Event;
+
 using std::vector;
+using std::cout;
+using std::endl;
 
 enum
 {

@@ -3,13 +3,17 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <string>
+#include <iostream>
 
 using sf::Texture;
 using sf::Sprite;
 using sf::RenderWindow;
 using sf::Vector2f;
+using sf::Clock;
 
 using std::string;
+using std::cout;
+using std::endl;
 
 class Entity 
 {
@@ -25,6 +29,7 @@ public:
 	void draw(RenderWindow *window) const;
 	float getX();
 	float getY();
+	string getName() const;
 
 protected:
 	virtual bool load(string directory) = 0;
@@ -33,4 +38,5 @@ protected:
 	Sprite entityDrawable;
 	string name;
 	Vector2f velocity;
+	Clock movementClock;
 };

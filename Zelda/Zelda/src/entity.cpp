@@ -22,7 +22,9 @@ void Entity::draw(RenderWindow *window) const
 
 void Entity::move(Vector2f distance)
 {
-	entityDrawable.move(distance);
+	float deltaTime = movementClock.getElapsedTime().asSeconds();
+	movementClock.restart();
+	entityDrawable.move({ distance.x * deltaTime, distance.y * deltaTime });
 }
 
 void Entity::setPosition(Vector2f pos)
@@ -48,4 +50,9 @@ float Entity::getY()
 float Entity::getX()
 {
 	return entityDrawable.getPosition().x;
+}
+
+string Entity::getName() const
+{
+	return name;
 }

@@ -2,10 +2,12 @@
 
 Character::Character(string _name) : Entity(_name)
 {
-	load("./data/characters/");
+	if (!load("./data/characters/")) cout << "couldn't load map" << endl;;
 	moving = false;
+	movingHoriz = false;
+	movingVert = false;
 	direction = { HorizontalDirection::NEUTRAL, VerticalDirection::NEUTRAL };
-	animationTime = 0.0f;
+	animationClock.restart();
 }
 
 Character::~Character()
@@ -17,10 +19,10 @@ Character::~Character()
 bool Character::load(string directory)
 {
 	//first, load the texture sheet for the character
-	entityTexture.loadFromFile(directory + name + ".png");
+	if(!entityTexture.loadFromFile(directory + name + ".png")) return false;
 	
 	//then, load the map
-	string mapPath = "./data/maps" + name + ".dat";
+	string mapPath = "./data/maps/" + name + ".dat";
 	string buffer;
 	ifstream load(mapPath);
 	IntRect tempRect;
@@ -33,7 +35,7 @@ bool Character::load(string directory)
 		//clear the beginning out of the way
 		getline(load, buffer, ',');
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 1; i < 5; i++)
 		{
 			switch (i)
 			{
@@ -51,6 +53,9 @@ bool Character::load(string directory)
 		frameRect.push_back(tempRect);
 	}
 
+	setFrame(0);
+	load.close();
+
 	return true;
 }
 
@@ -58,4 +63,15 @@ void Character::setDirection(Directions directions)
 {
 	direction.horizontal = directions.horizontal;
 	direction.vertical = directions.vertical;
+}
+
+void Character::setFrame(int frame)
+{
+	entityDrawable.setTextureRect(frameRect[frame]);
+	frameNumber = frame;
+}
+
+int Character::getFrameNumber() const
+{
+	return frameNumber;
 }
